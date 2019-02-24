@@ -29,5 +29,6 @@ else
       mkdir -p $DST
       cp template.cpp $DST/main.cpp
       cp ../atcoder-scraper/dist/atcoder-scraper.exe $DST
+      cp ../atcoder-scraper/setting.json $DST
     done
 fi
