@@ -3,7 +3,7 @@
 CMDNAME=`basename $0`
 
 usage() {
-  echo "Usage: $CMDNAME [-c] [-d CONTEST] [-p]" 1>&2
+  echo "Usage: $CMDNAME [-c] [-p] [-d CONTEST]" 1>&2
   exit 1
 }
 
@@ -11,8 +11,8 @@ while getopts cd:p OPT
 do
   case $OPT in
     "c" ) FLG_C="TRUE" ;;
-    "d" ) VALUE_D="$OPTARG" ;;
     "p" ) FLG_P="TRUE" ;;
+    "d" ) VALUE_D="$OPTARG" ;;
       # * ) usage ;;
   esac
 done
@@ -21,13 +21,26 @@ done
 [ "$VALUE_D" = "" ] && usage
 
 if [ "$FLG_C" = "TRUE" ]; then
-  echo "Not yet implemented"
-else
-  mkdir -p ../atcoder/$VALUE_D
+  DIR=../codeforces/$VALUE_D
+  mkdir -p $DIR
   problems=("a" "b" "c")
   for problem in "${problems[@]}"
     do
-      DST=../atcoder/$VALUE_D/$problem
+      DST=$DIR/$problem
+      mkdir -p $DST
+      if [ "$FLG_P" = "TRUE" ]; then
+        touch $DST/main.py
+      else
+        cp template.cpp $DST/main.cpp
+      fi
+    done
+else
+  DIR=../atcoder/$VALUE_D
+  mkdir -p $DIR
+  problems=("a" "b" "c")
+  for problem in "${problems[@]}"
+    do
+      DST=$DIR/$problem
       mkdir -p $DST
       if [ "$FLG_P" = "TRUE" ]; then
         touch $DST/main.py
